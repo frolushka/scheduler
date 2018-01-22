@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <title>Users</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="../static/css/main.css"
+          th:href="@{../static/css/main.css}"/>
+
+</head>
+<body>
+
+<div th:fragment="logout" class="logout"
+     sec:authorize="isAuthenticated()">
+    Logged user: <span sec:authentication="name">Bob</span> |
+    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
+    <!--/* When using CSRF this needs to be a POST */-->
+    <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
+</div>
+
+<h1>USERS</h1>
+<div class="users">
+    <div th:each="user : ${users}">
+        <p th:text="${user.getUsername()}"></p>
+        <p th:text="${user.getPassword()}"></p>
+        <p th:text="${user.getInvite()}"></p><br/>
+    </div>
+</div>
+
+<h1>INVITES</h1>
+<div class="invites">
+    <div th:each="invite : ${invites}">
+        <p th:text="${invite.getUsername()}"></p>
+        <p th:text="${invite.getInvite()}"></p>
+    </div>
+</div>
+
+<p><a th:href="@{/login}">Ко входу</a></p>
+<p><a th:href="@{/registration}">К регистрации</a></p>
+
+<script type="text/javascript"
+></script>
+
+</body>
+</html>
