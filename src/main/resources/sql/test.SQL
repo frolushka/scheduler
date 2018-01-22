@@ -24,6 +24,7 @@ create table user_invites (
   PRIMARY KEY (invite_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+
 insert into users(username, password, invite, active) values ('admin', '$2a$10$eK8lxfRMZmXhe3gLQgUrBOcAS8.91jffDASZN3EVMiBqRl6ucDr1G', 'admin', 1);
 
 insert into user_roles(role, username) values ('ROLE_ADMIN', 'admin');
