@@ -21,6 +21,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
+    private LoggingAccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${spring.queries.users-query}")
@@ -37,15 +40,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers(
+                        "/",
+                        "/js/**",
+                        "/css/**",
+                        "/img/**",
+                        "/webjars/**").permitAll()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")
                 .and()
-                    .formLogin().loginPage("/login").successForwardUrl("/").failureUrl("/login?error")
+                    .formLogin().loginPage("/login").failureUrl("/login?error")
                     .usernameParameter("username").passwordParameter("password")
                 .and()
                     .logout().logoutSuccessUrl("/login?logout")
                 .and()
-                    .csrf();
+                    .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
     @Override

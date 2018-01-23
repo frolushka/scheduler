@@ -31,3 +31,5 @@ insert into user_roles(role, username) values ('ROLE_ADMIN', 'admin');
 insert into user_roles(role, username) values ('ROLE_USER', 'admin');
 
 insert into user_invites(invite, username) values ('admin', 'admin');
+
+ALTER USER sa set PASSWORD '1234'

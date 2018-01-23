@@ -1,11 +1,8 @@
 package mvc.controller;
 
-import mvc.SchedulerApplication;
 import mvc.model.user.Invite;
 import mvc.model.user.User;
 import mvc.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,31 +20,34 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String openLogin(Model model) {
-        return "login";
+        return "login/login";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("user", new User());
-        return "registration";
+        return "login/registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String createNewUser(Model model, @Valid User user, BindingResult bindingResult) {
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
-            bindingResult.rejectValue("password", "error.user", "Введенные пароли не совпадают.");
+            bindingResult.rejectValue("password", "error.password", "Введенные пароли не совпадают.");
+//            model.addAttribute("error.passwordConfirm", true);
         }
         User userExists = userService.findUserByUsername(user.getUsername());
         if (userExists != null) {
-            bindingResult.rejectValue("username", "error.user", "Пользователь с введенным именем уже существует.");
+            bindingResult.rejectValue("username", "error.username", "Пользователь с введенным именем уже существует.");
+//            model.addAttribute("error.username", true);
         }
         Invite inviteIsFree = userService.findInvite(user.getInvite());
         if (inviteIsFree == null || inviteIsFree.getUsername() != null) {
-            bindingResult.rejectValue("invite", "error.user", "Введенный пригласительный не действителен или уже занят.");
+            bindingResult.rejectValue("invite", "error.invite", "Введенный пригласительный не действителен или уже занят.");
+//            model.addAttribute("error.invite", true);
         }
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/registration";
+            return "login/registration";
         } else {
             userService.saveUser(user);
             return "redirect:/";
