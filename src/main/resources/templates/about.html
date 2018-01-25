@@ -13,13 +13,6 @@
 </head>
 
 <body>
-    <div th:fragment="logout" class="logout"
-         sec:authorize="isAuthenticated()">
-        Logged user: <span sec:authentication="name">Bob</span> |
-        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
-        <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
-    </div>
-
     <div layout:fragment="content" th:remove="tag">
         <h1>Разработчики:</h1>
         <p><b>Команда «пробел»</b></p>

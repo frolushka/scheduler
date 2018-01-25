@@ -19,7 +19,7 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping(value = "/login")
-    public String openLogin(Model model) {
+    public String openLogin() {
         return "login";
     }
 
@@ -30,20 +30,17 @@ public class LoginController {
     }
 
     @PostMapping(value = "/registration")
-    public String createNewUser(Model model, @Valid User user, BindingResult bindingResult) {
+    public String createNewUser(@Valid User user, BindingResult bindingResult) {
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             bindingResult.rejectValue("password", "error.password", "Введенные пароли не совпадают.");
-//            model.addAttribute("error.passwordConfirm", true);
         }
         User userExists = userService.findUserByUsername(user.getUsername());
         if (userExists != null) {
             bindingResult.rejectValue("username", "error.username", "Пользователь с введенным именем уже существует.");
-//            model.addAttribute("error.username", true);
         }
         Invite inviteIsFree = userService.findInvite(user.getInvite());
         if (inviteIsFree == null || inviteIsFree.getUsername() != null) {
             bindingResult.rejectValue("invite", "error.invite", "Введенный пригласительный не действителен или уже занят.");
-//            model.addAttribute("error.invite", true);
         }
 
         if (bindingResult.hasErrors()) {
