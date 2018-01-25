@@ -2,7 +2,6 @@ package mvc.controller;
 
 import mvc.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +14,9 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/")
+    @GetMapping
     public String adminPage() {
-        return "blank";
+        return "admin/main";
     }
 
     @GetMapping(value = "/generate-invite")
@@ -28,7 +27,7 @@ public class AdminController {
 
     @GetMapping(value = "/generate-invite/{invite}")
     public String generateInvite(@PathVariable("invite") String invite) {
-        return "blank";
+        return "admin/main";
     }
 
 }

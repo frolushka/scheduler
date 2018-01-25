@@ -5,51 +5,51 @@
       layout:decorate="~{fragments/layout}">
 
 <head>
-    <title>Users</title>
+    <title>Тестовая страница</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <link rel="stylesheet" type="text/css"/>
-
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
 </head>
+
 <body>
 
-<div th:fragment="logout" class="logout"
-     sec:authorize="isAuthenticated()">
-    Logged user: <span sec:authentication="name">Bob</span> |
-    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
-    <!--/* When using CSRF this needs to be a POST */-->
-    <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
-</div>
-
-<div layout:fragment="content" th:remove="tag">
-    <h1>USERS</h1>
-
-    <div class="users">
-        <div th:each="user : ${users}">
-            <p th:text="${user.getUsername()}"></p>
-            <p th:text="${user.getPassword()}"></p>
-            <p th:text="${user.getInvite()}"></p>
-            <p>-----------------</p>
-        </div>
+    <div th:fragment="logout" class="logout"
+        sec:authorize="isAuthenticated()">
+        Logged user: <span sec:authentication="name">Bob</span> |
+        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
+        <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
     </div>
 
-    <h1>INVITES</h1>
-    <div class="invites">
-        <div th:each="invite : ${invites}">
-            <p th:text="${invite.getUsername()}"></p>
-            <p th:text="${invite.getInvite()}"></p>
-            <p>-----------------</p>
+    <div layout:fragment="content" th:remove="tag">
+        <h1>USERS</h1>
+
+        <div class="users">
+            <div th:each="user : ${users}">
+                <p th:text="${user.getUsername()}"></p>
+                <p th:text="${user.getPassword()}"></p>
+                <p th:text="${user.getInvite()}"></p>
+                <p>-----------------</p>
+            </div>
         </div>
+
+        <h1>INVITES</h1>
+        <div class="invites">
+            <div th:each="invite : ${invites}">
+                <p th:text="${invite.getUsername()}"></p>
+                <p th:text="${invite.getInvite()}"></p>
+                <p>-----------------</p>
+            </div>
+        </div>
+
+        <div th:fragment="login" class="login"
+             sec:authorize="!isAuthenticated()">
+            <p><a th:href="@{/login}">Ко входу</a></p>
+            <p><a th:href="@{/registration}">К регистрации</a></p>
+        </div>
+
     </div>
 
-    <p><a th:href="@{/login}">Ко входу</a></p>
-    <p><a th:href="@{/registration}">К регистрации</a></p>
-</div>
-
-<script type="text/javascript"
-></script>
-
+    <script type="text/javascript"></script>
 </body>
 </html>

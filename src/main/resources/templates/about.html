@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Инфа о создателях</title>
-</head>
-<body>
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
 
+<head>
+    <title>О создателях</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<body>
+    <div th:fragment="logout" class="logout"
+         sec:authorize="isAuthenticated()">
+        Logged user: <span sec:authentication="name">Bob</span> |
+        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
+        <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
+    </div>
+
+    <div layout:fragment="content" th:remove="tag">
+        <h1>Разработчики:</h1>
+        <p><b>Команда «пробел»</b></p>
+        <p>Мамонтов Александр</p>
+        <p>Буняева Виктория</p>
+        <p>Фролов Максим</p>
+
+        <div th:fragment="login" class="login"
+             sec:authorize="!isAuthenticated()">
+            <p><a th:href="@{/login}">Ко входу</a></p>
+            <p><a th:href="@{/registration}">К регистрации</a></p>
+        </div>
+
+    </div>
+    <script type="text/javascript"></script>
 </body>
 </html>
