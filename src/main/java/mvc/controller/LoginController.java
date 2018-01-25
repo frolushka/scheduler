@@ -1,14 +1,14 @@
 package mvc.controller;
 
-import mvc.model.user.Invite;
-import mvc.model.user.User;
-import mvc.service.UserService;
+import mvc.user.model.Invite;
+import mvc.user.model.User;
+import mvc.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
@@ -18,18 +18,18 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     public String openLogin(Model model) {
-        return "login/login";
+        return "login";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @GetMapping(value = "/registration")
     public String registration(Model model) {
         model.addAttribute("user", new User());
-        return "login/registration";
+        return "registration";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping(value = "/registration")
     public String createNewUser(Model model, @Valid User user, BindingResult bindingResult) {
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             bindingResult.rejectValue("password", "error.password", "Введенные пароли не совпадают.");
@@ -47,7 +47,7 @@ public class LoginController {
         }
 
         if (bindingResult.hasErrors()) {
-            return "login/registration";
+            return "registration";
         } else {
             userService.saveUser(user);
             return "redirect:/";

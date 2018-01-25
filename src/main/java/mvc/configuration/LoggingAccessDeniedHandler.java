@@ -26,9 +26,12 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null) {
-            log.info(auth.getName()
+            log.debug(auth.getName()
                     + " was trying to access protected resource: "
                     + request.getRequestURI());
+            System.out.println(auth.getAuthorities());
+        } else {
+            log.debug("Something strange happens...");
         }
 
         response.sendRedirect(request.getContextPath() + "/access-denied");

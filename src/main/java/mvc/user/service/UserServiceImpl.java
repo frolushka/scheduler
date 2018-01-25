@@ -1,11 +1,11 @@
-package mvc.service;
+package mvc.user.service;
 
-import mvc.model.user.Invite;
-import mvc.model.user.Role;
-import mvc.model.user.User;
-import mvc.repository.user.InviteRepository;
-import mvc.repository.user.RoleRepository;
-import mvc.repository.user.UserRepository;
+import mvc.user.model.Invite;
+import mvc.user.model.Role;
+import mvc.user.model.User;
+import mvc.user.repository.InviteRepository;
+import mvc.user.repository.RoleRepository;
+import mvc.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

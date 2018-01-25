@@ -1,8 +1,8 @@
-package mvc.service;
+package mvc.user.service;
 
-import mvc.model.user.Invite;
-import mvc.model.user.Role;
-import mvc.model.user.User;
+import mvc.user.model.Invite;
+import mvc.user.model.Role;
+import mvc.user.model.User;
 
 import java.util.List;
 
