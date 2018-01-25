@@ -27,9 +27,27 @@ create table user_invites (
 
 insert into users(username, password, invite, active) values ('admin', '$2a$10$eK8lxfRMZmXhe3gLQgUrBOcAS8.91jffDASZN3EVMiBqRl6ucDr1G', 'admin', 1);
 
-insert into user_roles(role, username) values ('ROLE_ADMIN', 'admin');
-insert into user_roles(role, username) values ('ROLE_USER', 'admin');
+insert into user_roles(role, username) values ('ADMIN', 'admin');
 
 insert into user_invites(invite, username) values ('admin', 'admin');
 
-ALTER USER sa set PASSWORD '1234'
+drop table if exists calendars;
+create table calendars (
+  calendar_id int(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) DEFAULT NULL,
+  owner_id int(11) NOT NULL,
+  PRIMARY KEY (calendar_id)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+drop table if exists events;
+create table events (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) DEFAULT NULL,
+  calendar_id int(11) NOT NULL,
+  start_date int(11) DEFAULT NULL,
+  end_date int(11) DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT events_ibfk_l FOREIGN KEY (calendar_id) REFERENCES calendars(calendar_id)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
