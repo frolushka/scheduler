@@ -21,7 +21,7 @@ public class MainController {
 
     @GetMapping(value = "/test")
     public String test() {
-        return "blank";
+        return "test/index";
     }
 
     @GetMapping(value = "/about")

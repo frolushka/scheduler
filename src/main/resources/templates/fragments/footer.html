@@ -10,7 +10,7 @@
                 <span sec:authorize="isAuthenticated()" style="display: inline-block;">
                     | Вы авторизованы как: <span sec:authentication="name"></span> |
                     Права: <span sec:authentication="principal.authorities"></span> |
-                    <a th:href="@{/logout}">Выйти</a>
+                    <a th:href="@{/login?logout}">Выйти</a>
                 </span>
             </p>
         </div>

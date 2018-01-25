@@ -2,15 +2,18 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
+
 <head>
     <title>Страница не найдена</title>
 </head>
+
 <body>
-<div layout:fragment="content" th:remove="tag">
-    <h3>404 Not Found</h3>
-    <h1 th:text="${errorCode}">404</h1>
-    <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-    <a th:href="@{/}">Вернуться на главную страницу</a>
-</div>
+    <div layout:fragment="content" th:remove="tag">
+        <h3>404 Not Found</h3>
+        <h1 th:text="${errorCode}">404</h1>
+        <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+        <a th:href="@{/}">Вернуться на главную страницу</a>
+    </div>
 </body>
+
 </html>

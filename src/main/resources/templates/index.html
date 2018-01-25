@@ -18,9 +18,9 @@
 
         <div class="users">
             <div th:each="user : ${users}">
-                <p th:text="${user.getUsername()}"></p>
-                <p th:text="${user.getPassword()}"></p>
-                <p th:text="${user.getInvite()}"></p>
+                <p th:text="${user.getUsername()}">Username</p>
+                <p th:text="${user.getPassword()}">Password</p>
+                <p th:text="${user.getInvite()}">Invite</p>
                 <p>-----------------</p>
             </div>
         </div>
@@ -28,8 +28,8 @@
         <h1>INVITES</h1>
         <div class="invites">
             <div th:each="invite : ${invites}">
-                <p th:text="${invite.getUsername()}"></p>
-                <p th:text="${invite.getInvite()}"></p>
+                <p th:text="${invite.getUsername()}">Username</p>
+                <p th:text="${invite.getInvite()}">Invite</p>
                 <p>-----------------</p>
             </div>
         </div>

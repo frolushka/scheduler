@@ -23,17 +23,18 @@ public class Calendar implements Serializable {
     private String description;
 
     @NotEmpty
-    @Column(name = "owner_id")
-    private Long ownerId;
+    @Column(name = "owner")
+    private String owner;
 
     @OneToMany(mappedBy = "calendar")
     private Set<Event> events;
 
     protected Calendar() {}
 
-    public Calendar(String name, Long ownerId) {
+    public Calendar(String name, String description, String owner) {
         this.name = name;
-        this.ownerId = ownerId;
+        this.description = description;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -60,12 +61,12 @@ public class Calendar implements Serializable {
         this.description = description;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public String getOwnerId() {
+        return owner;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    public void setOwnerId(String ownerId) {
+        this.owner = ownerId;
     }
 
     public Set<Event> getEvents() {

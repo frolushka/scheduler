@@ -38,4 +38,8 @@ public class CalendarServiceImpl implements CalendarService {
                 .collect(toList());
     }
 
+    public List<Calendar> getUserCalendars(String owner) {
+        return calendarRepository.findByOwner(owner);
+    }
+
 }

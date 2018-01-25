@@ -25,7 +25,7 @@ create table user_invites (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-insert into users(username, password, invite, active) values ('admin', '$2a$10$eK8lxfRMZmXhe3gLQgUrBOcAS8.91jffDASZN3EVMiBqRl6ucDr1G', 'admin', 1);
+insert into users(username, password, invite, active) values ('admin', '$2a$10$jPCOs6WRaruWufiIPg4zIOKokiezAq5pDlDOVXVnvbHsL28bolG5S', 'admin', 1);
 
 insert into user_roles(role, username) values ('ADMIN', 'admin');
 
@@ -36,7 +36,7 @@ create table calendars (
   calendar_id int(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(255) DEFAULT NULL,
-  owner_id int(11) NOT NULL,
+  owner VARCHAR(255) NOT NULL,
   PRIMARY KEY (calendar_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 

@@ -13,16 +13,17 @@
 </head>
 
 <body>
+    <div layout:fragment="content" th:remove="tag">
 
-<div layout:fragment="content" th:remove="tag">
+        <div th:fragment="login" class="login"
+             sec:authorize="!isAuthenticated()">
+            <p><a th:href="@{/login}">Ко входу</a></p>
+            <p><a th:href="@{/registration}">К регистрации</a></p>
+        </div>
 
-    <div th:fragment="login" class="login"
-         sec:authorize="!isAuthenticated()">
-        <p><a th:href="@{/login}">Ко входу</a></p>
-        <p><a th:href="@{/registration}">К регистрации</a></p>
     </div>
 
-</div>
-<script type="text/javascript"></script>
+    <script type="text/javascript"></script>
 </body>
+
 </html>

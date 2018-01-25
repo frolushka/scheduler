@@ -13,22 +13,18 @@
 </head>
 
 <body>
-<div th:fragment="logout" class="logout"
-     sec:authorize="isAuthenticated()">
-    Logged user: <span sec:authentication="name">Bob</span> |
-    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
-    <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
-</div>
-
-<div layout:fragment="content" th:remove="tag">
-
-    <div th:fragment="login" class="login"
-         sec:authorize="!isAuthenticated()">
-        <p><a th:href="@{/login}">Ко входу</a></p>
-        <p><a th:href="@{/registration}">К регистрации</a></p>
+    <div th:fragment="logout" class="logout"
+         sec:authorize="isAuthenticated()">
+        Logged user: <span sec:authentication="name">Bob</span> |
+        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
+        <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
     </div>
 
-</div>
-<script type="text/javascript"></script>
+    <div layout:fragment="content" th:remove="tag">
+
+    </div>
+
+    <script type="text/javascript"></script>
 </body>
+
 </html>

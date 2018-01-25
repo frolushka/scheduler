@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 
-    Calendar findByName(String name);
+    List<Calendar> findByName(String name);
 
-    Calendar findByOwnerId(Long ownerId);
+    List<Calendar> findByOwner(String owner);
 
     Calendar findById(Long id);
 
