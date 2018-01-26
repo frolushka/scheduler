@@ -14,7 +14,7 @@
             <form autocomplete="off" th:action="@{/registration}" th:object="${user}" method="post">
                 <div class="form-group">
                     <div th:if="${#fields.hasErrors('invite')}">
-                        <label style="color:darkred;"  th:errors="*{invite}"
+                        <label style="color:darkred;" th:errors="*{invite}"
                                class="validation-message"></label>
                     </div>
                     <label for="invite">Пригласительный</label>:

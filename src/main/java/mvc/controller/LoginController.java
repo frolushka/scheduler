@@ -40,6 +40,10 @@ public class LoginController {
         if (userExists != null) {
             bindingResult.rejectValue("username", "error.username", "*Пользователь с введенным именем уже существует.");
         }
+        if (!bindingResult.hasFieldErrors("username") && !user.getUsername().matches("^(?=.*[a-zA-Z0-9])(?=\\S+$)$")) {
+            bindingResult.rejectValue("username", "error.username", "*Имя пользователя должно состоять только из букв" +
+                    " латинского алфавита и цифр.");
+        }
         Invite inviteIsFree = userService.findInvite(user.getInvite());
         if (!bindingResult.hasFieldErrors("invite") && (inviteIsFree == null || inviteIsFree.getUsername() != null)) {
             bindingResult.rejectValue("invite", "error.invite", "*Введенный пригласительный не действителен или уже занят.");
