@@ -1,5 +1,4 @@
-<img src="https://i.imgur.com/V0QWypk.png" width="800" height="200">
-
+# [] TEAM | Scheduler
 
 <p align="center">
 <b>Техническое задание к проекту</b><br>      
