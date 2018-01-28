@@ -16,7 +16,7 @@ public class AdminController {
 
     @GetMapping
     public String adminPage() {
-        return "admin/main";
+        return "admin/index";
     }
 
     @GetMapping(value = "/generate-invite")
@@ -27,7 +27,7 @@ public class AdminController {
 
     @GetMapping(value = "/generate-invite/{invite}")
     public String generateInvite(@PathVariable("invite") String invite) {
-        return "admin/main";
+        return "admin/index";
     }
 
 }

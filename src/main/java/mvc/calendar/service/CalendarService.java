@@ -11,6 +11,8 @@ public interface CalendarService {
 
     public void saveNewEventToCalendar(Long calendarId, Event event);
 
+    public void saveNewCalendar(Calendar calendar);
+
     public List<Calendar> getAllCalendars();
 
     public List<Calendar> getUserCalendars(String owner);

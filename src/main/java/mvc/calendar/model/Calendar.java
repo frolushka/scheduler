@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,22 +17,24 @@ public class Calendar implements Serializable {
     @Column(name = "calendar_id")
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "*Имя не должно быть пустым.")
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
 
-    @NotEmpty
     @Column(name = "owner")
     private String owner;
 
     @OneToMany(mappedBy = "calendar")
     private Set<Event> events;
 
-    protected Calendar() {}
+    public Calendar() {
+        events = new HashSet<>();
+    }
 
     public Calendar(String name, String description, String owner) {
+        this();
         this.name = name;
         this.description = description;
         this.owner = owner;
@@ -61,12 +64,12 @@ public class Calendar implements Serializable {
         this.description = description;
     }
 
-    public String getOwnerId() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.owner = ownerId;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public Set<Event> getEvents() {
@@ -76,19 +79,19 @@ public class Calendar implements Serializable {
     public void setEvents(Set<Event> events) {
         this.events = events;
     }
-
-    @Override
-    public int hashCode() {
-        return (int)(long)(id % Integer.MAX_VALUE);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return (obj instanceof Calendar) && this.toString().equals(((Calendar)obj).toString());
-    }
-
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
+//
+//    @Override
+//    public int hashCode() {
+//        return (int)(long)(id % Integer.MAX_VALUE);
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        return (obj instanceof Calendar) && this.toString().equals(((Calendar)obj).toString());
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return new Gson().toJson(this);
+//    }
 }
