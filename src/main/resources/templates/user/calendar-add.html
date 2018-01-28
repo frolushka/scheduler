@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Вход</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form autocomplete="off" th:action="@{/user/calendar/add}" th:object="${calendar}" method="post">
+                <h1>Добавление календаря</h1>
+                <div class="form-group">
+                    <div th:if="${#fields.hasErrors('name')}">
+                        <label style="color:darkred;" th:errors="*{name}"
+                               class="validation-message"></label>
+                    </div>
+                    <label for="name">Имя</label>:
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           th:field="*{name}"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="Имя">
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание (необязательно)</label>:
+                    <input type="text"
+                           id="description"
+                           name="description"
+                           th:field="*{description}"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="Описание календаря">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit"
+                                   id="calendar-add-submit"
+                                   name="calendar-add-submit"
+                                   class="form-control btn btn-info"
+                                   value="Создать">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

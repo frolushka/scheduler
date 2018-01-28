@@ -88,18 +88,18 @@ public class Event implements Serializable {
         this.endDate = endDate;
     }
 
-    @Override
-    public int hashCode() {
-        return (int)(long)(id % Integer.MAX_VALUE);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return (obj instanceof Event) && this.toString().equals(((Event)obj).toString());
-    }
-
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
+//    @Override
+//    public int hashCode() {
+//        return (int)(long)(id % Integer.MAX_VALUE);
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        return (obj instanceof Event) && this.toString().equals(((Event)obj).toString());
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return new Gson().toJson(this);
+//    }
 }

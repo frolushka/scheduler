@@ -31,6 +31,10 @@ public class CalendarServiceImpl implements CalendarService {
         saveNewEventToCalendar(calendarRepository.findById(calendarId), event);
     }
 
+    public void saveNewCalendar(Calendar calendar) {
+        calendarRepository.save(calendar);
+    }
+
     public List<Calendar> getAllCalendars() {
         return StreamSupport
                 .stream(Spliterators.spliteratorUnknownSize(calendarRepository.findAll().iterator(), Spliterator.NONNULL),

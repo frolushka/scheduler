@@ -23,10 +23,23 @@
         <span>Вам доступны следующие календари:</span>
         <div class="calendars">
             <div th:each="calendar : ${calendars}">
-                <a th:href="@{/}" th:text="${calendar.getName()}"></a>
+                <a th:href="@{/user/calendar(id=${calendar.getId()})}" th:text="${calendar.getName()}"></a>
             </div>
         </div>
     </div>
+
+    <form th:action="@{/user/calendar/add}" method="get">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-3">
+                    <input type="submit"
+                           id="login-submit"
+                           class="form-control btn btn-info"
+                           value="Новый календарь">
+                </div>
+            </div>
+        </div>
+    </form>
 
 </div>
 

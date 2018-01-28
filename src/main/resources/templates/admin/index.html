@@ -13,15 +13,20 @@
 </head>
 
 <body>
-    <div th:fragment="logout" class="logout"
-         sec:authorize="isAuthenticated()">
-        Logged user: <span sec:authentication="name">Bob</span> |
-        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
-        <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
-    </div>
-
     <div layout:fragment="content" th:remove="tag">
-
+        <form th:action="@{/admin/generate-invite}" method="get">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-3 col-sm-offset-3">
+                        <input type="submit"
+                               name="login-submit"
+                               id="gen-invite"
+                               class="form-control btn btn-info"
+                               value="Новый пригласительный">
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
     <script type="text/javascript"></script>

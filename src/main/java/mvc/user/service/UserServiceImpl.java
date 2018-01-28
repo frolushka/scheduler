@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
         userRepository.save(user);
-        saveRole(new Role(user.getUsername(), "ROLE_USER"));
+        saveRole(new Role(user.getUsername(), "USER"));
 
         Invite toDelete = inviteRepository.findByInvite(user.getInvite());
         inviteRepository.delete(toDelete);

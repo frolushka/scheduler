@@ -6,7 +6,7 @@
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a th:href="@{/}" class="navbar-brand">Scheluder</a>
+                <a th:href="@{/}" class="navbar-brand">Scheduler</a>
             </div>
             <div id="home" class="collapse  navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -20,6 +20,9 @@
                 <ul sec:authorize="!isAuthenticated()" class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/registration}"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
                     <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Вход</a></li>
+                </ul>
+                <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Выход</a></li>
                 </ul>
             </div>
         </div>
