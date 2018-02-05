@@ -1,52 +1,7 @@
 $(document).ready(function() {
 
    var tuti = new Date();
-   var events = [
-            {
-               "id":1,
-               "start": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate(), 12),
-               "end": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate(), 13, 30),
-               "title":"Сас Лехи",
-               "filtr":"Школа"
-            },
-            {
-               "id":2,
-               "start": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate(), 14),
-               "end": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate(), 14, 45),
-               "title":"Митинг с Лехой",
-               "filtr":"Внеучебка"
-            },
-            {
-               "id":3,
-               "start": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate() + 1, 17),
-               "end": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate() + 1, 17, 45),
-               "title":"Стрижка Лехи",
-               "filtr":"Школа"
-            },
-            {
-               "id":4,
-               "start": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate() - 1, 8),
-               "end": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate() - 1, 9, 30),
-               "title":"Завтрак с Лехой",
-               "filtr":"Внеучебка"
-            },
-            {
-               "id":5,
-               "start": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate() + 1, 14),
-               "end": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate() + 1, 15),
-               "title":"Показ Лехи",
-               "filtr":"Школа"
-            },
-            {
-               "id":6,
-               "start": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate(), 10),
-               "end": new Date(tuti.getFullYear(), tuti.getMonth(), tuti.getDate(), 11),
-               "title":"Леха для чтения",
-               "filtr":"Внеучебка",
-               readOnly : true
-            }
-
-         ];
+   
    var $calendar = $('#calendar');
    var id = 10;
 
@@ -105,8 +60,6 @@ $(document).ready(function() {
                   var person = getEventData();
                   person.events.push(calEvent);
                   var q = JSON.stringify(person);
-                  console.log(person.events.length);
-                  console.log('====');
                   $.ajax({type: "POST", url:"/refresh_data", data:{'str': q}, async:false});
                   //$.post("/refresh_data", {"str": q}, function( data ){  });
 

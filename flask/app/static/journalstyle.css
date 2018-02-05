@@ -20,9 +20,11 @@ p {
 .ui-widget {
 	font-size: 1em;	
 }
+.ui-widget-content {
+	margin-left: 0px;
+}
 
-
-#event_edit_container, #about, #addfil, #login {
+#event_edit_container, #about, #addfil, #login, #comment {
 	display: none;
 }
 
@@ -33,15 +35,8 @@ p {
 	width: 10%;
 	height: 100%;
 }
-#about_button_container {
-	position: absolute;
-	top: 1em;
-	right: 1em;	
-	padding: 0.5em 2em;
-	background: #ddf;
-	border: 1px solid #bbd;
-	width: 10em;
-	text-align: center;
+#comment {
+	
 }
 #calendar {
 	left: 10%;
@@ -88,4 +83,8 @@ ul.formatted li {
 
 ol.formatted li {
 	list-style-type: decimal;
+}
+
+td {
+	border: 1px solid black;
 }

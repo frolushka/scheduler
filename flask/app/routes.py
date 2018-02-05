@@ -82,3 +82,7 @@ def correct_reg():
 	f = open(u'app\\static\\events\\' + login + u'.json','w')
 	f.close()
 	return url_for('index',username=name,login=login)
+
+@app.route('/journal')
+def journal():
+	return render_template('journal.html')

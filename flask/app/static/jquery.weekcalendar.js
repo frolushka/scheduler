@@ -191,13 +191,7 @@ var person = {
       removeUnsavedEvents : function() {
 
          var self = this;
-         var date = this.options.date;
-           var weekStartDate = self._dateFirstDayOfWeek(date);
-           var weekEndDate = self._dateLastMilliOfWeek(date);
-           this.options.data(weekStartDate, weekEndDate,
-                    function(data) {
-                      console.log(data.events.length);
-                    });
+         
          self.element.find(".wc-new-cal-event").each(function() {
             $(this).remove();
          });
@@ -1143,7 +1137,6 @@ var person = {
            options.data(weekStartDate, weekEndDate,
                     function(data) {
                       window.person.events = data.events;
-                      console.log(data.events.length);
                     });
            $.each(window.person.events, function(i, eventos) {
               if(eventos.title == calEvent.title && eventos.id == calEvent.id){
