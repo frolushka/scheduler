@@ -35,7 +35,7 @@ html, body {
   border-radius: 3px;
   border-width: 0px;
 }
-#registration {
+#log {
   font-size: 20px;
   margin-top: 10px; 
   color: #0E7F7E;
@@ -44,7 +44,7 @@ html, body {
 #reglink {
   margin-top: 10px;
 }
-#login {
+#login, #password, #name {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -55,17 +55,7 @@ html, body {
   box-sizing: border-box;
   font-size: 14px;
 }
-#password {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
+
 .regbut {
   white-space: nowrap;
   overflow: hidden;

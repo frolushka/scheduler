@@ -21,7 +21,7 @@ p {
 	font-size: 1em;	
 }
 
-#event_edit_container, #about, #addfil {
+#event_edit_container, #about, #addfil, #login {
 	display: none;
 }
 

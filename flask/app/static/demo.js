@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
    var tuti = new Date();
@@ -103,11 +102,13 @@ $(document).ready(function() {
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
                   calEvent.filtr = $dialogContent.find("select[name='filtr']").val();
-                  var eventos = getEventData();
-                  eventos.push(calEvent);
-                  console.log(calEvent);
-                  var q = JSON.stringify(eventos);
-                  $.post("/refresh_data", {"str": q}, function( data ){  });
+                  var person = getEventData();
+                  person.events.push(calEvent);
+                  var q = JSON.stringify(person);
+                  console.log(person.events.length);
+                  console.log('====');
+                  $.ajax({type: "POST", url:"/refresh_data", data:{'str': q}, async:false});
+                  //$.post("/refresh_data", {"str": q}, function( data ){  });
 
                   $calendar.weekCalendar("removeUnsavedEvents");
                   $calendar.weekCalendar("updateEvent", calEvent);
@@ -201,7 +202,8 @@ $(document).ready(function() {
    }
 
    function getEventData() {
-      $.ajax({url:"/get_data", async:false, success:function( data ){ a = data; }});
+      var login = $('#login').text();
+      $.ajax({url:"/get_data", data:{'login': login}, async:false, success:function( data ){ a = data; }});
       var arr = JSON.parse(a);
       return arr;
    }

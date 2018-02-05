@@ -14,14 +14,13 @@
  *   
  *   If you're after a monthly calendar plugin, check out http://arshaw.com/fullcalendar/
  */
-
-(function($) {
-
-   $.widget("ui.weekCalendar", {
-       person : {
+var person = {
          events : [],
          filtres: [],
-       },
+       };
+(function($) {
+   $.widget("ui.weekCalendar", {
+       
        options : {
          date: new Date(),
          timeFormat : "H:i a",
@@ -192,7 +191,13 @@
       removeUnsavedEvents : function() {
 
          var self = this;
-
+         var date = this.options.date;
+           var weekStartDate = self._dateFirstDayOfWeek(date);
+           var weekEndDate = self._dateLastMilliOfWeek(date);
+           this.options.data(weekStartDate, weekEndDate,
+                    function(data) {
+                      console.log(data.events.length);
+                    });
          self.element.find(".wc-new-cal-event").each(function() {
             $(this).remove();
          });
@@ -372,7 +377,7 @@
          var self = this;
          var options = this.options; 
          var date = this.options.date;
-         var filtres = this.person.filtres;
+         var filtres = window.person.filtres;
          var $checkBox = $("#left").find('form[name=\'checkfiltr\']');
          var weekStartDate = self._dateFirstDayOfWeek(date);
 
@@ -380,6 +385,8 @@
          options.data(weekStartDate, weekEndDate,
                   function(data) {
                     filtres = data.filtres;
+                    window.person.filtres = data.filtres;
+                    window.person.events = data.events;
                   });
          $checkBox.html('');
          for(var i = 0; i < filtres.length; ++i){
@@ -567,7 +574,7 @@
 
                $newEvent.remove();
                var newCalEvent = {start: eventDuration.start, end: eventDuration.end, title: options.newEventText, filtr: ""};
-               var $renderedCalEvent = self._renderEvent(newCalEvent, $weekDay);
+               var $renderedCalEvent = self._renderEvent(newCalEvent, $weekDay,1);
 
                if (!options.allowCalEventOverlap) {
                   self._adjustForEventCollisions($weekDay, $renderedCalEvent, newCalEvent, newCalEvent);
@@ -680,14 +687,13 @@
          var self = this;
          var options = this.options;
          var eventsToRender;
-         var person = this.person;
 
          if ($.isArray(data)) {
             eventsToRender = self._cleanEvents(data.events);
          } else if (data.events) {
             eventsToRender = self._cleanEvents(data.events);
          }
-         person.events = eventsToRender.events;
+         //window.person.events = eventsToRender.events;
          if (data.options) {
 
             var updateLayout = false;
@@ -713,7 +719,6 @@
 
          var filtr = options.filtres;
          var t;
-         console.log(filtr);
          $.each(eventsToRender, function(i, calEvent) {
             for(t = 0; t < filtr.length; ++t)
                 if(filtr[t] == calEvent.filtr){
@@ -725,7 +730,7 @@
                 var $weekDay = self._findWeekDayForEvent(calEvent, $weekDayColumns);
 
                 if ($weekDay) {
-                   self._renderEvent(calEvent, $weekDay);
+                   self._renderEvent(calEvent, $weekDay,0);
                 }
             }
          });
@@ -746,7 +751,7 @@
        * Render a specific event into the day provided. Assumes correct
        * day for calEvent date
        */
-      _renderEvent: function (calEvent, $weekDay) {
+      _renderEvent: function (calEvent, $weekDay, check) {
          var self = this;
          var options = this.options;
          var t;
@@ -774,7 +779,7 @@
          $calEvent = $modifiedEvent ? $modifiedEvent.appendTo($weekDay) : $calEvent.appendTo($weekDay);
          $calEvent.css({lineHeight: (options.timeslotHeight - 2) + "px", fontSize: (options.timeslotHeight / 2) + "px"});
 
-         self._refreshEventDetails(calEvent, $calEvent);
+         self._refreshEventDetails(calEvent, $calEvent, check);
          self._positionEvent($weekDay, $calEvent);
          $calEvent.show();
 
@@ -902,6 +907,8 @@
          var self = this;
          var options = this.options;
          var filtr = options.filtres;
+         
+           
          for(t = 0; t < filtr.length; ++t)
             if(filtr[t] == calEvent.filtr)
                 break;
@@ -921,9 +928,9 @@
 
          var $weekDay = self._findWeekDayForEvent(calEvent, self.element.find(".wc-time-slots .wc-day-column-inner"));
          if ($weekDay) {
-            var $calEvent = self._renderEvent(calEvent, $weekDay);
+            var $calEvent = self._renderEvent(calEvent, $weekDay,1);
             self._adjustForEventCollisions($weekDay, $calEvent, calEvent, calEvent);
-            self._refreshEventDetails(calEvent, $calEvent);
+            self._refreshEventDetails(calEvent, $calEvent,0);
             self._positionEvent($weekDay, $calEvent);
             self._adjustOverlappingEvents($weekDay);
          }
@@ -1064,10 +1071,8 @@
                var $weekDayColumns = self.element.find(".wc-day-column-inner");
                 //trigger drop callback
                options.eventDrop(calEvent, calEvent, $newEvent);
-               var $newEvent = self._renderEvent(calEvent, self._findWeekDayForEvent(calEvent, $weekDayColumns));
+               var $newEvent = self._renderEvent(calEvent, self._findWeekDayForEvent(calEvent, $weekDayColumns),1);
                $calEvent.hide();
-               var q = JSON.stringify(this.person);
-               $.post("/refresh_data", {"str": q}, function( data ){  });
                $calEvent.data("preventClick", true);
                var $weekDayOld = self._findWeekDayForEvent($calEvent.data("calEvent"), self.element.find(".wc-time-slots .wc-day-column-inner"));
                if ($weekDayOld.data("startDate") != $weekDay.data("startDate")) {
@@ -1101,7 +1106,7 @@
                //var newCalEvent = $.extend(true, {}, calEvent, {start: calEvent.start, end: newEnd});
                self._adjustForEventCollisions($weekDay, $calEvent, calEvent, calEvent);
 
-               self._refreshEventDetails(calEvent, $calEvent);
+               self._refreshEventDetails(calEvent, $calEvent,1);
                self._positionEvent($weekDay, $calEvent);
                self._adjustOverlappingEvents($weekDay);
                //trigger resize callback
@@ -1117,10 +1122,11 @@
       /*
        * Refresh the displayed details of a calEvent in the calendar
        */
-      _refreshEventDetails : function(calEvent, $calEvent) {
+      _refreshEventDetails : function(calEvent, $calEvent, check) {
          var self = this;
          var options = this.options;
          var one_hour = 3600000;
+         
          var displayTitleWithTime = calEvent.end.getTime()-calEvent.start.getTime() <= (one_hour/options.timeslotsPerHour);
          if (displayTitleWithTime){
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + ": " + calEvent.title);
@@ -1129,11 +1135,28 @@
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
          }
          $calEvent.find(".wc-title").html(calEvent.title);
-         //var q = JSON.stringify(eventos);
-         //$.post("/refresh_data", {"str": q}, function( data ){  });
-         //$.ajax({type: "POST", url: "/refresh_data", data: {str: q}, success: function( data ){ console.log(data); }});
+         if(check == 1){
+           var date = this.options.date;
+           var weekStartDate = self._dateFirstDayOfWeek(date);
+           
+           var weekEndDate = self._dateLastMilliOfWeek(date);
+           options.data(weekStartDate, weekEndDate,
+                    function(data) {
+                      window.person.events = data.events;
+                      console.log(data.events.length);
+                    });
+           $.each(window.person.events, function(i, eventos) {
+              if(eventos.title == calEvent.title && eventos.id == calEvent.id){
+                eventos.title = calEvent.title;
+                eventos.start = JSON.stringify(calEvent.start).replace('\"'," ");
+                eventos.end = JSON.stringify(calEvent.end).replace('\"'," ");
+              }
+           });
+           var q = JSON.stringify(window.person);
+           $.ajax({type: "POST", url:"/refresh_data", data:{'str': q}, async:false});
+           
+         }
          $calEvent.data("calEvent", calEvent);
-         
       },
 
       /*
